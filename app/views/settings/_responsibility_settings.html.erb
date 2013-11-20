@@ -1,0 +1,64 @@
+<div id="info">
+  <h3><%= t(:please_provide) %></h3>
+  <ul>
+    <li><%= t(:provide_titles) %></li>
+    <li><%= t(:provide_roles) %></li>
+  </ul>
+</div>
+<div id="list">
+    <% if !Setting.plugin_redmine_responsibility_list[:roles].blank? %>
+      <% Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,v),i| %>
+        <div class="form-elem">
+          <h4 class="role_header"><%= t(:role) %> <%= i+1 %></h4>
+          <div class="formrow">
+            <%= label_tag "title#{i+1}", t(:title) %>
+            <%= text_field_tag "settings[[roles][role#{i+1}][title]]", v[:title], :autocomplete => 'off', class: "basictxt", id: "title#{i+1}" %>
+          </div>
+          <div class="formrow">
+            <%= label_tag "names#{i+1}", t(:roles) %>
+            <%= select_tag "settings[[roles][role#{i+1}[names][]",
+               options_for_select(
+                 Role.all.map(&:name) - ['Anonymous', 'Non member'],
+                 Setting.plugin_redmine_responsibility_list[:roles]["role#{i+1}"][:names]
+                 ), :multiple => true, :id => "names#{i+1}" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <div class="form-elem">
+    <h4 class="role_header"><%= t(:custom_header) %></h4>
+    <div class="formrow">
+      <%= label_tag :custom_field, t(:custom_name) %>
+      <%= select_tag "settings[custom_field]",
+         ("<option></option>" + options_from_collection_for_select(CustomField.where(field_format: 'bool'), 'id', 'name',
+           Setting.plugin_redmine_responsibility_list[:custom_field]
+           )).html_safe, :id => 'custom_field' %>
+    </div>
+  </div>
+  <div class="form-elem">
+    <h4 class="role_header"><%= t(:auth_header) %></h4>
+    <div class="formrow">
+      <%= label_tag "auth_key", 'Authorization key:' %>
+      <%= text_field_tag "settings[[auth_key]]", Setting.plugin_redmine_responsibility_list[:auth_key], class: "basictxt", id: "auth_key", :autocomplete => 'off' %>
+    </div>
+  </div>
+  <div class="form-elem">
+    <h4 class="role_header"><%= t(:allowed_groups) %></h4>
+    <div class="formrow">
+      <%= label_tag "groups", "Group names:" %>
+      <%= select_tag "settings[groups][]",
+        options_from_collection_for_select(Group.all, 'id', 'lastname',
+             Setting.plugin_redmine_responsibility_list[:groups]
+             ), :multiple => true, :id => "groups" %>
+    </div>
+  </div>
+</div>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'settings_page.js',   :plugin => 'redmine_responsibility_list' %>
+  <%= javascript_include_tag 'my_selectize.js',    :plugin => 'redmine_responsibility_list' %>
+  <%= javascript_include_tag 'selectize.min.js',   :plugin => 'redmine_responsibility_list' %>
+  <%= stylesheet_link_tag 'selectize.css',         :plugin => 'redmine_responsibility_list' %>
+  <%= stylesheet_link_tag 'selectize.default.css', :plugin => 'redmine_responsibility_list' %>
+  <%= stylesheet_link_tag 'custom_styles.css',     :plugin => 'redmine_responsibility_list' %>
+<% end %>

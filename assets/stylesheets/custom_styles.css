@@ -1,0 +1,25 @@
+.basictxt {
+  display: block;
+  padding: 6px 0px;
+  width: 100%;
+  color: #555;
+  font-size: 1.2em;
+  border: 1px solid #ccc;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.selectize-control {  }
+
+.formrow {
+  width:450px;
+  padding-bottom: 4px;
+  margin-left: 40px;
+}
+
+.form-elem {
+  padding-bottom:8px;
+}
+
+.role_header {
+  margin-left:15px;
+}

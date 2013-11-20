@@ -1,0 +1,18 @@
+<h1><%= t(:responsibility_list) %></h1>
+<h2><%= t(:open_projects) %></h2>
+<table class="list">
+  <%= render 'table_header' %>
+  <%= render 'table_body', :list => @full_list[:open], :custom_field => @list_handler.custom_field %>
+</table>
+<br />
+<h2><%= t(:closed_projects) %></h2>
+<table class="list">
+  <%= render 'table_header' %>
+  <%= render 'table_body', :list => @full_list[:closed], :custom_field => @list_handler.custom_field %>
+</table>
+<br />
+<h2><%= t(:archived_projects) %></h2>
+<table class="list">
+  <%= render 'table_header' %>
+  <%= render 'table_body', :list => @full_list[:archived], :custom_field => @list_handler.custom_field %>
+</table>

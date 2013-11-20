@@ -1,0 +1,15 @@
+personal_data:
+  id: 1
+  name: Personal Data
+  min_length: 0
+  regexp: ""
+  is_for_all: false
+  is_filter: false
+  type: ProjectCustomField
+  max_length: 0
+  possible_values: nil
+  is_required: false
+  field_format: bool
+  default_value:
+  editable: true
+  position: 1

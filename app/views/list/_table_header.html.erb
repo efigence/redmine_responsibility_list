@@ -1,0 +1,15 @@
+<thead>
+  <tr>
+    <th><%= t(:project) %></th>
+    <th><%= t(:code_name) %></th>
+    <th><%= t(:url) %></th>
+    <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role1][:title] %></th>
+    <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role2][:title] %></th>
+    <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role3][:title] %></th>
+    <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role4][:title] %></th>
+    <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role5][:title] %></th>
+    <% if @list_handler.custom_field %>
+      <th><%= @list_handler.custom_field.name %></th>
+    <% end %>
+  </tr>
+</thead>

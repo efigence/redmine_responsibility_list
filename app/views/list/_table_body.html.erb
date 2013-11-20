@@ -1,0 +1,19 @@
+<tbody>
+  <% list.each do |project| %>
+    <tr>
+      <td><%= link_to project[:name], Project.find_by_name(project[:name]) %></td>
+      <td><%= project[:identifier] %></td>
+      <td><%= project[:page] %></td>
+      <td><%= multiple_user_link(project[@list_handler.roles[0]]) %></td>
+      <td><%= multiple_user_link(project[@list_handler.roles[1]]) %></td>
+      <td><%= multiple_user_link(project[@list_handler.roles[2]]) %></td>
+      <td><%= multiple_user_link(project[@list_handler.roles[3]]) %></td>
+      <td><%= multiple_user_link(project[@list_handler.roles[4]]) %></td>
+      <% if custom_field %>
+        <td style="text-align:center;">
+          <input type="checkbox" disabled=true <%= project[custom_field.name] == true ? "checked" : nil %> />
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>

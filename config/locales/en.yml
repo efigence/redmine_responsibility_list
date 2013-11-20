@@ -1,0 +1,18 @@
+en:
+  responsibility_list: Responsibility list
+  open_projects: Open projects
+  closed_projects: Closed projects
+  archived_projects: Archived projects
+  project: Project
+  code_name: Code name
+  url: URL
+  please_provide: "Please provide:"
+  provide_titles: "role titles of your choice, which will be visible on responsibility list as table headers (please be advised that changing titles will also affect adequate key names in JSON!)"
+  provide_roles: "your redmine role names for each predefined role title"
+  role: Role
+  title: "Title:"
+  roles: "Redmine roles:"
+  custom_header: "Name of a custom boolean field"
+  custom_name: "Custom field name:"
+  auth_header: "HTTP request Authorization header value which will let you access responsibility list in JSON format"
+  allowed_groups: "Groups, which can access responsibility list and see a link at the top of the page"

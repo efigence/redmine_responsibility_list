@@ -1,0 +1,1 @@
+# Redmine Responsibility List plugin
