@@ -35,6 +35,6 @@ class ListController < ApplicationController
   end
 
   def groups_with_access
-    Setting.plugin_redmine_responsibility_list[:groups]
+    Setting.plugin_redmine_responsibility_list[:groups] || []
   end
 end

@@ -10,8 +10,8 @@ Redmine::Plugin.register :redmine_responsibility_list do
     { :controller => 'list', :action => 'index' },
     :caption => 'Responsibility list',
     :last => true, :if => proc {
-      User.current.admin? ||
-      !(User.current.groups.select('id').collect{|el| el.id.to_s} & Setting.plugin_redmine_responsibility_list[:groups]).blank? }
+     User.current.admin? ||
+     !(User.current.groups.select('id').collect{|el| el.id.to_s} & (Setting.plugin_redmine_responsibility_list[:groups] || [])).blank? }
 
 
   settings :default => {

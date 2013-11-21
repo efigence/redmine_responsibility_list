@@ -6,7 +6,7 @@ class ListHandler
   def initialize
     @open_list, @closed_list, @archived_list = [], [], []
     @roles = Setting.plugin_redmine_responsibility_list[:roles].map { |k,v| v[:title] }
-    @custom_field = custom_field_val
+    @custom_field = custom_field_value
   end
 
   def generate
@@ -19,12 +19,8 @@ class ListHandler
 
   private
 
-  def custom_enabled?
-    !Setting.plugin_redmine_responsibility_list[:custom_field].blank?
-  end
-
-  def custom_field_val
-    custom_enabled? ? CustomField.find(Setting.plugin_redmine_responsibility_list[:custom_field]) : nil
+  def custom_field_value
+    CustomField.find_by_id(Setting.plugin_redmine_responsibility_list[:custom_field])
   end
 
   def get_data_for(project)
@@ -38,7 +34,7 @@ class ListHandler
     Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,v), i|
       Setting.plugin_redmine_responsibility_list[:roles][k][:names].try :each do |role_name|
         current_role = Role.find_by_name(role_name)
-        data[@roles[i]] += project.users_by_role[current_role].select('login').map(&:login) if project.users_by_role[current_role]
+        data[@roles[i]] += project.users_by_role[current_role].map(&:login) if project.users_by_role[current_role]
       end
       data[@roles[i]].uniq!
     end

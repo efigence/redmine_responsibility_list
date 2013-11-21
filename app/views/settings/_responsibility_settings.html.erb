@@ -16,10 +16,10 @@
           </div>
           <div class="formrow">
             <%= label_tag "names#{i+1}", t(:roles) %>
-            <%= select_tag "settings[[roles][role#{i+1}[names][]",
+            <%= select_tag "settings[[roles][role#{i+1}][names]]",
                options_for_select(
                  Role.all.map(&:name) - ['Anonymous', 'Non member'],
-                 Setting.plugin_redmine_responsibility_list[:roles]["role#{i+1}"][:names]
+                 Setting.plugin_redmine_responsibility_list[:roles]["role#{i+1}".to_sym][:names]
                  ), :multiple => true, :id => "names#{i+1}" %>
           </div>
         </div>
