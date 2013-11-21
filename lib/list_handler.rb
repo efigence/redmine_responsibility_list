@@ -38,7 +38,7 @@ class ListHandler
     Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,v), i|
       Setting.plugin_redmine_responsibility_list[:roles][k][:names].try :each do |role_name|
         current_role = Role.find_by_name(role_name)
-        data[@roles[i]] += project.users_by_role[current_role].map(&:login) if project.users_by_role[current_role]
+        data[@roles[i]] += project.users_by_role[current_role].select('login').map(&:login) if project.users_by_role[current_role]
       end
       data[@roles[i]].uniq!
     end
