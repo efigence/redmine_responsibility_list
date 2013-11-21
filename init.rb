@@ -16,11 +16,11 @@ Redmine::Plugin.register :redmine_responsibility_list do
 
   settings :default => {
     roles: {
-      'role1' => { title: 'Project Manager', names: ['Project Manager'] },
-      'role2' => { title: 'Architect',       names: ['Application architect'] },
-      'role3' => { title: 'Vice architect',  names: ['Vice-Architect'] },
-      'role4' => { title: 'Developers',      names: ['Developer'] },
-      'role5' => { title: 'Front End',       names: ['Frontend Developer'] }
+      :role1 => { title: 'Project Manager', names: ['Project Manager'] },
+      :role2 => { title: 'Architect',       names: ['Application architect'] },
+      :role3 => { title: 'Vice architect',  names: ['Vice-Architect'] },
+      :role4 => { title: 'Developers',      names: ['Developer'] },
+      :role5 => { title: 'Front End',       names: ['Frontend Developer'] }
     }, auth_key: '123456'
   }, :partial => 'settings/responsibility_settings'
 end
