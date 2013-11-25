@@ -10,7 +10,7 @@ en:
   provide_titles: "role titles of your choice, which will be visible on responsibility list as table headers (please be advised that changing titles will also affect adequate key names in JSON!)"
   provide_roles: "your redmine role names for each predefined role title"
   role: Role
-  title: "Title:"
+  role_title: "Title:"
   roles: "Redmine roles:"
   custom_header: "Name of a custom boolean field"
   custom_name: "Custom field name:"

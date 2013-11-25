@@ -6,29 +6,30 @@
   </ul>
 </div>
 <div id="list">
-    <% if !Setting.plugin_redmine_responsibility_list[:roles].blank? %>
+  <table style="width: 100%">
+    <thead>
+      <th><%= t(:roles) %></th>
+      <th><%= t(:role_title) %></th>
+    </thead>
+    <tbody>
       <% Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,v),i| %>
-        <div class="form-elem">
-          <h4 class="role_header"><%= t(:role) %> <%= i+1 %></h4>
-          <div class="formrow">
-            <%= label_tag "title#{i+1}", t(:title) %>
+        <tr>
+          <td style="width: 20%">
             <%= text_field_tag "settings[[roles][role#{i+1}][title]]", v[:title], :autocomplete => 'off', class: "basictxt", id: "title#{i+1}" %>
-          </div>
-          <div class="formrow">
-            <%= label_tag "names#{i+1}", t(:roles) %>
+          </td>
+          <td style="width: 80%">
             <%= select_tag "settings[[roles][role#{i+1}][names]]",
                options_for_select(
-                 Role.all.map(&:name) - ['Anonymous', 'Non member'],
+                 Role.pluck(:name),
                  Setting.plugin_redmine_responsibility_list[:roles]["role#{i+1}".to_sym][:names]
                  ), :multiple => true, :id => "names#{i+1}" %>
-          </div>
-        </div>
+          </td>
+        </tr>
       <% end %>
-    <% end %>
+  </table>
   <div class="form-elem">
-    <h4 class="role_header"><%= t(:custom_header) %></h4>
+    <h4><%= t(:custom_header) %></h4>
     <div class="formrow">
-      <%= label_tag :custom_field, t(:custom_name) %>
       <%= select_tag "settings[custom_field]",
          ("<option></option>" + options_from_collection_for_select(CustomField.where(field_format: 'bool'), 'id', 'name',
            Setting.plugin_redmine_responsibility_list[:custom_field]
@@ -36,16 +37,14 @@
     </div>
   </div>
   <div class="form-elem">
-    <h4 class="role_header"><%= t(:auth_header) %></h4>
+    <h4><%= t(:auth_header) %></h4>
     <div class="formrow">
-      <%= label_tag "auth_key", 'Authorization key:' %>
       <%= text_field_tag "settings[[auth_key]]", Setting.plugin_redmine_responsibility_list[:auth_key], class: "basictxt", id: "auth_key", :autocomplete => 'off' %>
     </div>
   </div>
   <div class="form-elem">
-    <h4 class="role_header"><%= t(:allowed_groups) %></h4>
+    <h4><%= t(:allowed_groups) %></h4>
     <div class="formrow">
-      <%= label_tag "groups", "Group names:" %>
       <%= select_tag "settings[groups][]",
         options_from_collection_for_select(Group.all, 'id', 'lastname',
              Setting.plugin_redmine_responsibility_list[:groups]
