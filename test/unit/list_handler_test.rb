@@ -19,19 +19,8 @@ class ListHandlerTest < ActiveSupport::TestCase
                              :custom_values])
 
   def setup
+    generate_default_settings
     @handler = ListHandler.new
-
-    Setting.plugin_redmine_responsibility_list = {
-      roles: {
-        :role1 => { title: 'Project Manager', names: ['Project Manager'] },
-        :role2 => { title: 'Architect',       names: ['Application architect'] },
-        :role3 => { title: 'Vice architect',  names: ['Vice-Architect'] },
-        :role4 => { title: 'Developers',      names: ['Developer'] },
-        :role5 => { title: 'Front End',       names: ['Frontend Developer'] }
-      },
-      auth_key: '123456',
-      custom_field: '1'
-    }
   end
 
   def test_new_instance_init_attributes
@@ -55,7 +44,7 @@ class ListHandlerTest < ActiveSupport::TestCase
   end
 
   def test_list_generation_with_roles_assigned_to_multiple_role_titles
-    Setting.plugin_redmine_responsibility_list[:roles]['role4'][:names] = ['Developer', 'Frontend Developer', 'Application architect']
+    Setting.plugin_redmine_responsibility_list[:roles][:role4][:names] = ['Developer', 'Frontend Developer', 'Application architect']
     assign_projects
     comparison_data_multiple_roles
     @list = @handler.generate
@@ -135,5 +124,19 @@ class ListHandlerTest < ActiveSupport::TestCase
     @open_list[1]['Developers'] = [User.find(1).login, User.find(2).login]
     @closed_list[0]['Developers'] = [User.first.login]
     @archived_list[0]['Developers'] = [User.find(3).login, User.first.login, User.find(4).login]
+  end
+
+  def generate_default_settings
+    Setting.plugin_redmine_responsibility_list = {
+      roles: {
+        :role1 => { title: 'Project Manager', names: ['Project Manager', 'Manager'] },
+        :role2 => { title: 'Architect',       names: ['Application architect'] },
+        :role3 => { title: 'Vice architect',  names: ['Vice-Architect'] },
+        :role4 => { title: 'Developers',      names: ['Developer'] },
+        :role5 => { title: 'Front End',       names: ['Frontend Developer'] }
+      },
+      auth_key: '123456',
+      custom_field: '1'
+    }
   end
 end
