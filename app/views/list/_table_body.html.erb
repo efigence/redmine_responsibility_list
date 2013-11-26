@@ -1,16 +1,16 @@
 <tbody>
   <% list.each do |project| %>
     <tr>
-      <td><%= link_to project[:name], Project.find_by_name(project[:name]) %></td>
-      <td><%= project[:identifier] %></td>
-      <td><%= project[:page] %></td>
-      <td><%= multiple_user_link(project[@list_handler.roles[0]]) %></td>
-      <td><%= multiple_user_link(project[@list_handler.roles[1]]) %></td>
-      <td><%= multiple_user_link(project[@list_handler.roles[2]]) %></td>
-      <td><%= multiple_user_link(project[@list_handler.roles[3]]) %></td>
-      <td><%= multiple_user_link(project[@list_handler.roles[4]]) %></td>
+      <td style="width:8%"><%= link_to project[:name], Project.find_by_name(project[:name]) %></td>
+      <td style="width:8%"><%= project[:identifier] %></td>
+      <td style="width:8%"><%= project[:page] %></td>
+      <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[0]]) %></td>
+      <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[1]]) %></td>
+      <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[2]]) %></td>
+      <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[3]]) %></td>
+      <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[4]]) %></td>
       <% if custom_field %>
-        <td style="text-align:center;">
+        <td style="text-align:center;width:5%">
           <input type="checkbox" disabled=true <%= project[custom_field.name] == true ? "checked" : nil %> />
         </td>
       <% end %>
