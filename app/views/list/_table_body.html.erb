@@ -13,6 +13,8 @@
         <td style="text-align:center;width:5%">
           <% if custom_field.field_format == 'bool' %>
             <input type="checkbox" disabled=true <%= project[custom_field.name] == true ? "checked" : nil %> />
+          <% elsif custom_field.field_format == 'user' %>
+            <%= User.find_by_id(project[custom_field.name]) ? link_to_user(User.find(project[custom_field.name])) : nil %>
           <% else %>
             <%= project[custom_field.name] %>
           <% end %>
