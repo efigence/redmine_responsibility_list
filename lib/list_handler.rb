@@ -15,12 +15,13 @@ class ListHandler
     Project.where(status: 5).each { |project| @closed_list   << get_data_for(project) }
     Project.where(status: 9).each { |project| @archived_list << get_data_for(project) }
 
-    { open: @open_list, closed: @closed_list, archived: @archived_list }
+    { open: @open_list.compact, closed: @closed_list.compact, archived: @archived_list.compact }
   end
 
   private
 
   def get_data_for(project)
+    return if CustomField.find_by_name("Responsibility list").custom_values.where(customized_id: project.id).first.try(:value) != "1"
     @project = project
     data = { name: project.name, page: project.homepage, code_name: get_code_name }
 

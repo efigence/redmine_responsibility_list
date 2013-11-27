@@ -10,6 +10,16 @@ unless CustomField.find_by_name("Code name")
   code_name.save!
 end
 
+unless CustomField.find_by_name("Responsibility list")
+  code_name = CustomField.new
+  code_name.assign_attributes({ name: "Responsibility list",
+                                field_format: "bool",
+                                editable: true,
+                                type: "ProjectCustomField"
+                              }, :without_protection => true)
+  code_name.save!
+end
+
 Redmine::Plugin.register :redmine_responsibility_list do
   name 'Redmine Responsibility List plugin'
   author 'Jacek Grzybowski'
