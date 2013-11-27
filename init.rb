@@ -1,5 +1,15 @@
 require 'redmine'
 
+unless CustomField.find_by_name("Code name")
+  code_name = CustomField.new
+  code_name.assign_attributes({ name: "Code name",
+                                field_format: "string",
+                                editable: true,
+                                type: "ProjectCustomField"
+                              }, :without_protection => true)
+  code_name.save!
+end
+
 Redmine::Plugin.register :redmine_responsibility_list do
   name 'Redmine Responsibility List plugin'
   author 'Jacek Grzybowski'
@@ -21,6 +31,8 @@ Redmine::Plugin.register :redmine_responsibility_list do
       :role3 => { title: 'Vice architect',  names: ['Vice-Architect'] },
       :role4 => { title: 'Developers',      names: ['Developer'] },
       :role5 => { title: 'Front End',       names: ['Frontend Developer'] }
-    }, auth_key: '123456'
+    },
+    auth_key: 'RJwKdAN9',
+    custom_fields: []
   }, :partial => 'settings/responsibility_settings'
 end

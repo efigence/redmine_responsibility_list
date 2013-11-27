@@ -2,16 +2,20 @@
   <% list.each do |project| %>
     <tr>
       <td style="width:8%"><%= link_to project[:name], Project.find_by_name(project[:name]) %></td>
-      <td style="width:8%"><%= project[:identifier] %></td>
+      <td style="width:8%"><%= project[:code_name] %></td>
       <td style="width:8%"><%= project[:page] %></td>
       <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[0]]) %></td>
       <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[1]]) %></td>
       <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[2]]) %></td>
       <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[3]]) %></td>
       <td style="width:10%"><%= multiple_user_link(project[@list_handler.roles[4]]) %></td>
-      <% if custom_field %>
+      <% custom_fields.each do |custom_field| %>
         <td style="text-align:center;width:5%">
-          <input type="checkbox" disabled=true <%= project[custom_field.name] == true ? "checked" : nil %> />
+          <% if custom_field.field_format == 'bool' %>
+            <input type="checkbox" disabled=true <%= project[custom_field.name] == true ? "checked" : nil %> />
+          <% else %>
+            <%= project[custom_field.name] %>
+          <% end %>
         </td>
       <% end %>
     </tr>

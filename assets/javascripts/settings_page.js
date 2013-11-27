@@ -25,7 +25,7 @@ $(function(){
     plugins: ['remove_button']
   });
 
-  $('#custom_field').selectize({
+  $('#custom_fields').selectize({
     plugins: ['remove_button']
   });
 });

@@ -12,7 +12,7 @@ en:
   role: Role
   role_title: "Title:"
   roles: "Redmine roles:"
-  custom_header: "Name of a custom boolean field"
+  custom_header: "Custom fields visible on responsibility list"
   custom_name: "Custom field name:"
   auth_header: "HTTP request Authorization header value which will let you access responsibility list in JSON format"
   allowed_groups: "Groups, which can access responsibility list and see a link at the top of the page"

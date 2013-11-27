@@ -27,28 +27,24 @@
         </tr>
       <% end %>
   </table>
-  <div class="form-elem">
-    <h4><%= t(:custom_header) %></h4>
-    <div class="formrow">
-      <%= select_tag "settings[custom_field]",
-         ("<option></option>" + options_from_collection_for_select(CustomField.where(field_format: 'bool'), 'id', 'name',
-           Setting.plugin_redmine_responsibility_list[:custom_field]
-           )).html_safe, :id => 'custom_field' %>
-    </div>
+  <h4><%= t(:custom_header) %></h4>
+  <div style="width:100%;">
+    <%= select_tag "settings[custom_fields]",
+      options_from_collection_for_select(CustomField.where(type: "ProjectCustomField"), 'id', 'name',
+        Setting.plugin_redmine_responsibility_list[:custom_fields]
+        ), :multiple => true, :id => "custom_fields" %>
+  </div>
+  <h4><%= t(:allowed_groups) %></h4>
+  <div style="width:100%;">
+      <%= select_tag "settings[groups][]",
+        options_from_collection_for_select(Group.all, 'id', 'lastname',
+          Setting.plugin_redmine_responsibility_list[:groups]
+          ), :multiple => true, :id => "groups" %>
   </div>
   <div class="form-elem">
     <h4><%= t(:auth_header) %></h4>
     <div class="formrow">
       <%= text_field_tag "settings[[auth_key]]", Setting.plugin_redmine_responsibility_list[:auth_key], class: "basictxt", id: "auth_key", :autocomplete => 'off' %>
-    </div>
-  </div>
-  <div class="form-elem">
-    <h4><%= t(:allowed_groups) %></h4>
-    <div class="formrow">
-      <%= select_tag "settings[groups][]",
-        options_from_collection_for_select(Group.all, 'id', 'lastname',
-             Setting.plugin_redmine_responsibility_list[:groups]
-             ), :multiple => true, :id => "groups" %>
     </div>
   </div>
 </div>

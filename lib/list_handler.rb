@@ -1,12 +1,13 @@
 class ListHandler
 
-  attr_reader :roles, :custom_field
+  attr_reader :roles, :custom_fields
   attr_accessor :open_list, :closed_list, :archived_list
 
   def initialize
     @open_list, @closed_list, @archived_list = [], [], []
     @roles = Setting.plugin_redmine_responsibility_list[:roles].map { |_,v| v[:title] }
-    @custom_field = requested_custom_field
+    @custom_fields = get_custom_fields
+    @code_name = CustomField.find_by_name("Code name")
   end
 
   def generate
@@ -20,9 +21,13 @@ class ListHandler
   private
 
   def get_data_for(project)
-    data = { name: project.name, identifier: project.identifier, page: project.homepage }
+    @project = project
+    data = { name: project.name, page: project.homepage, code_name: get_code_name }
 
-    data[@custom_field.name] = check_custom_value(project) if @custom_field
+    @custom_fields.each do |field|
+      value = field.custom_values.where(customized_id: project.id).first.try(:value)
+      data[field.name] = field.field_format == 'bool' ? value == '1' : value
+    end
 
     @roles.each { |role| data[role] = [] }
 
@@ -36,11 +41,23 @@ class ListHandler
     data
   end
 
-  def requested_custom_field
-    CustomField.find_by_id(Setting.plugin_redmine_responsibility_list[:custom_field])
+  def get_code_name
+    value = @code_name ? @code_name.custom_values.where(customized_id: @project.id).first.try(:value) : nil
+    if value && !value.blank?
+      value
+    else
+      @project.identifier
+    end
   end
 
-  def check_custom_value(project)
-    @custom_field.custom_values.where(customized_id: project.id).first.try(:value) == '1'
+  def get_custom_fields
+    arr = []
+    if !Setting.plugin_redmine_responsibility_list[:custom_fields].blank?
+      Setting.plugin_redmine_responsibility_list[:custom_fields].each do |id|
+        cf = CustomField.find_by_id(id.to_i)
+        arr << cf if cf
+      end
+    end
+    arr
   end
 end

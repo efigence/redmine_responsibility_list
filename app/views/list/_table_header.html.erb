@@ -8,8 +8,10 @@
     <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role3][:title] %></th>
     <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role4][:title] %></th>
     <th><%= Setting.plugin_redmine_responsibility_list[:roles][:role5][:title] %></th>
-    <% if @list_handler.custom_field %>
-      <th><%= @list_handler.custom_field.name %></th>
+    <% if @list_handler.custom_fields %>
+      <% @list_handler.custom_fields.each do |custom_field| %>
+        <th><%= custom_field.name %></th>
+      <% end %>
     <% end %>
   </tr>
 </thead>
