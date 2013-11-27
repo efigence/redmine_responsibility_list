@@ -1,6 +1,6 @@
 # Redmine Responsibility List plugin
 
-Plugin which enables access to responsibility list of all projects in redmine in HTML & in JSON
+Plugin which enables access to responsibility list of all projects in redmine in HTML & in JSON.
 
 # Requirements
 
@@ -13,7 +13,7 @@ Developed & tested on Redmine 2.3.3.
 3. Go back to root directory.
 4. Restart Redmine.
 
-# Configuration 
+# Configuration
 
 Visit Administration -> Plugins. Afterwards, click on `Configure` link next to the plugin name.
 
@@ -27,8 +27,8 @@ Here you should define:
 
 The default settings are:
 
-    
-    'Project Manager' => ['Project Manager'] 
+
+    'Project Manager' => ['Project Manager']
     'Architect'       => ['Application architect']
     'Vice architect'  => ['Vice-Architect']
     'Developers'      => ['Developer']
@@ -39,6 +39,8 @@ The default settings are:
 # Usage
 
 To see the responsibility list, simply click on its link seen on top menu.
+
+Responsibility list provides separate lists for open, closed & archived projects.
 
 To get responsibility list in JSON, request its URL with HTTP Header 'Authorization' set to the key defined in settings, for example:
 

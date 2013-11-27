@@ -8,8 +8,8 @@
 <div id="list">
   <table style="width: 100%">
     <thead>
-      <th><%= t(:roles) %></th>
       <th><%= t(:role_title) %></th>
+      <th><%= t(:roles) %></th>
     </thead>
     <tbody>
       <% Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,v),i| %>
