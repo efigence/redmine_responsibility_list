@@ -44,6 +44,6 @@ Responsibility list provides separate lists for open, closed & archived projects
 
 To get responsibility list as JSON, request its URL with HTTP Header 'Authorization' set to the key defined in settings, for example:
 
-    curl --header "Authorization: 123456" http://your.host.with.port/responsibility_list.json
+`curl --header "Authorization: 123456" http://your.host.with.port/responsibility_list.json`
 
 
