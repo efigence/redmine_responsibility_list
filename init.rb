@@ -11,13 +11,13 @@ unless CustomField.find_by_name("Code name")
 end
 
 unless CustomField.find_by_name("Responsibility list")
-  code_name = CustomField.new
-  code_name.assign_attributes({ name: "Responsibility list",
-                                field_format: "bool",
-                                editable: true,
-                                type: "ProjectCustomField"
-                              }, :without_protection => true)
-  code_name.save!
+  responsibility = CustomField.new
+  responsibility.assign_attributes({ name: "Responsibility list",
+                                     field_format: "bool",
+                                     editable: true,
+                                     type: "ProjectCustomField"
+                                   }, :without_protection => true)
+  responsibility.save!
 end
 
 Redmine::Plugin.register :redmine_responsibility_list do
