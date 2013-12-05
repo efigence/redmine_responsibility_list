@@ -46,4 +46,7 @@ To get responsibility list as JSON, request its URL with HTTP Header 'Authorizat
 
 `curl --header "Authorization: RJwKdAN9" http://your.host.with.port/responsibility_list.json`
 
+# License
+Redmine Responsibility List plugin is an Open Source project covered by the GNU General Public
+License version 2. See LICENSE file.
 
