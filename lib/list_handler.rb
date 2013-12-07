@@ -21,25 +21,22 @@ class ListHandler
   private
 
   def get_data_for(project)
-    return if CustomField.find_by_name("Responsibility list").custom_values.where(customized_id: project.id).first.try(:value) != "1"
+    return if CustomField.find_by_name("Responsibility list").
+          custom_values.where(customized_id: project.id).first.try(:value) != "1"
+
     @project = project
-    data = { name: project.name, page: project.homepage, code_name: get_code_name }
+    @users_with_roles = users_with_roles
 
-    @custom_fields.each do |field|
-      value = field.custom_values.where(customized_id: project.id).first.try(:value)
-      data[field.name] = field.field_format == 'bool' ? value == '1' : value
+    get_all_data
+    @data
+  end
+
+  def users_with_roles
+    user_roles = {}
+    @project.users_by_role.sort.each_with_index do |user_role, i|
+      user_roles[user_role[0].name] = user_role[1].map(&:login)
     end
-
-    @roles.each { |role| data[role] = [] }
-
-    Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,_), i|
-      Setting.plugin_redmine_responsibility_list[:roles][k][:names].try :each do |role_name|
-        current_role = Role.find_by_name(role_name)
-        data[@roles[i]] += project.users_by_role[current_role].map(&:login) if project.users_by_role[current_role]
-      end
-      data[@roles[i]].uniq!
-    end
-    data
+    user_roles
   end
 
   def get_code_name
@@ -60,5 +57,32 @@ class ListHandler
       end
     end
     arr
+  end
+
+  def assign_basic_data
+    @data = { name: @project.name, page: @project.homepage, code_name: get_code_name }
+    @roles.each { |role| @data[role] = [] }
+  end
+
+  def assign_custom_data
+    @custom_fields.each do |field|
+      value = field.custom_values.where(customized_id: project.id).first.try(:value)
+      @data[field.name] = field.field_format == 'bool' ? value == '1' : value
+    end
+  end
+
+  def assign_role_data
+    Setting.plugin_redmine_responsibility_list[:roles].each_with_index do |(k,_), i|
+      Setting.plugin_redmine_responsibility_list[:roles][k][:names].try :each do |role_name|
+        @data[@roles[i]] += @users_with_roles[role_name] unless @users_with_roles[role_name].nil?
+      end
+      @data[@roles[i]].uniq!
+    end
+  end
+
+  def get_all_data
+    assign_basic_data
+    assign_custom_data
+    assign_role_data
   end
 end
