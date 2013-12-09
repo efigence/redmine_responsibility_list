@@ -23,10 +23,8 @@ class ListHandler
   def get_data_for(project)
     return if CustomField.find_by_name("Responsibility list").
           custom_values.where(customized_id: project.id).first.try(:value) != "1"
-
     @project = project
     @users_with_roles = users_with_roles
-
     get_all_data
     @data
   end
@@ -41,11 +39,7 @@ class ListHandler
 
   def get_code_name
     value = @code_name ? @code_name.custom_values.where(customized_id: @project.id).first.try(:value) : nil
-    if value && !value.blank?
-      value
-    else
-      @project.identifier
-    end
+    !value.blank? ? value : @project.identifier
   end
 
   def get_custom_fields
@@ -66,7 +60,7 @@ class ListHandler
 
   def assign_custom_data
     @custom_fields.each do |field|
-      value = field.custom_values.where(customized_id: project.id).first.try(:value)
+      value = field.custom_values.where(customized_id: @project.id).first.try(:value)
       @data[field.name] = field.field_format == 'bool' ? value == '1' : value
     end
   end
