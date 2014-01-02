@@ -3,6 +3,7 @@ require 'list_handler'
 class ListController < ApplicationController
   unloadable
 
+  skip_before_filter :session_expiration, :user_setup, :check_if_login_required, :set_localization, if: :api_request?
   before_filter :permitted_or_api_request?
 
   def index
@@ -18,7 +19,7 @@ class ListController < ApplicationController
   private
 
   def permitted_or_api_request?
-    deny_access unless User.current.admin? || has_access? || api_request? && proper_auth_key?
+    deny_access unless api_request? && proper_auth_key? || User.current.admin? || has_access?
   end
 
   def proper_auth_key?
