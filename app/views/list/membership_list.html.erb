@@ -12,18 +12,18 @@
       <th><%= t(:project) %></th>
       <th>user</th>
       <th>role</th>
-      <th>given/taken</th>
+      <th>given / taken away</th>
       <th>date</th>
     </tr>
   </thead>
   <tbody>
       <% @memberships.each do |membership| %>
-        <tr>
-          <td style="width:10%"><%= membership.project %></td>
-          <td style="width:10%"><%= membership.user %></td>
-          <td style="width:10%"><%= membership.role_id %></td>
-          <td style="width:10%"><%= membership.given ? 'given' : 'taken' %></td>
-          <td style="width:10%"><%= membership.created_at %></td>
+        <tr style="height:25px;">
+          <td style="width:10%"><%= link_to membership.project, project_path(membership.project) %></td>
+          <td style="width:10%"><%= multiple_user_link(membership.user.login) %></td>
+          <td style="width:10%"><%= Role.find(membership.role_id).name %></td>
+          <td style="width:10%"><%= membership.given ? "<img src='images/toggle_check.png'>".html_safe : "<img src='images/unlock.png'>".html_safe %></td>
+          <td style="width:10%"><%= membership.created_at.to_s(:db) %></td>
         </tr>
       <% end %>
   </tbody>
