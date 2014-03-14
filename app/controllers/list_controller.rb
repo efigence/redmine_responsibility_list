@@ -16,6 +16,10 @@ class ListController < ApplicationController
     end
   end
 
+  def membership_list
+    @memberships = MembershipHistory.order('created_at DESC')
+  end
+
   private
 
   def permitted_or_api_request?

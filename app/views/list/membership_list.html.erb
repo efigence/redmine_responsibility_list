@@ -1,0 +1,30 @@
+<div class="tabs">
+  <ul>
+    <li><a href="/responsibility_list" id="tab-list">Responsibility list</a></li>
+    <li><a href="/memberships"  class="selected" id="tab-memberships">Memberships</a></li>
+  </ul>
+</div>
+
+<h1>memberships</h1>
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= t(:project) %></th>
+      <th>user</th>
+      <th>role</th>
+      <th>given/taken</th>
+      <th>date</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @memberships.each do |membership| %>
+        <tr>
+          <td style="width:10%"><%= membership.project %></td>
+          <td style="width:10%"><%= membership.user %></td>
+          <td style="width:10%"><%= membership.role_id %></td>
+          <td style="width:10%"><%= membership.given ? 'given' : 'taken' %></td>
+          <td style="width:10%"><%= membership.created_at %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
