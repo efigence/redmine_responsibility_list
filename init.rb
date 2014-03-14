@@ -46,3 +46,9 @@ Redmine::Plugin.register :redmine_responsibility_list do
     custom_fields: []
   }, :partial => 'settings/responsibility_settings'
 end
+
+ActionDispatch::Callbacks.to_prepare do
+  MemberRole.send(:include, RedmineResponsibilityList::MemberRolePatch)
+  User.send(:include, RedmineResponsibilityList::UserPatch)
+  Project.send(:include, RedmineResponsibilityList::ProjectPatch)
+end
