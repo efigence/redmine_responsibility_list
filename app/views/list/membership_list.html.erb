@@ -11,6 +11,13 @@
 
     <%= select_with_caption :role_id, 'Filter role', options_from_collection_for_select(Role.all, "id", "name", selected: params[:role_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
 
+    <%= label_tag :given, 'all' %>
+    <%= radio_button_tag :given, 'all', params[:given].blank? || params[:given] == 'all', :onchange => "this.form.submit(); return false;" %>
+    <%= label_tag :given, 'given' %>
+    <%= radio_button_tag :given, true, params[:given] == 'true', :onchange => "this.form.submit(); return false;" %>
+    <%= label_tag :given, 'taken away' %>
+    <%= radio_button_tag :given, false, params[:given] == 'false', :onchange => "this.form.submit(); return false;" %>
+
     <%= f.submit "search", class: "btn btn-primary", style: "margin-left:5px;" %>
     <%= link_to "reset filters", membership_list_path, class: "icon icon-reload" %>
   </fieldset>

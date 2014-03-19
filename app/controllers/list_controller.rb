@@ -22,6 +22,16 @@ class ListController < ApplicationController
     %w(project_id user_id role_id).each do |param|
       search_params[param] = params[param] unless params[param].blank?
     end
+
+    # not really nice
+    unless params[:given].blank? || params[:given] == 'all'
+      search_params[:given] = if params[:given] == 'true'
+                                true
+                             elsif params[:given] == 'false'
+                                false
+                             end
+    end
+
     @memberships = @search.result.where(search_params)
 
     @paginate, @memberships = paginate @memberships.order('created_at DESC'), :per_page => 20
