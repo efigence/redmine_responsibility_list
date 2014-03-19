@@ -5,11 +5,11 @@
 <%= search_form_for @search, url: membership_list_path, id: "search-form" do |f| %>
   <fieldset>
     <legend>Filters</legend>
-    <%= select_with_caption :project_id, 'Filter project', options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control" %>
+    <%= select_with_caption :project_id, 'Filter project', options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :user_id, 'Filter user', options_from_collection_for_select(User.all, "id", "fullname_with_login", selected: params[:user_id]), class: "form-control" %>
+    <%= select_with_caption :user_id, 'Filter user', options_from_collection_for_select(User.all, "id", "fullname_with_login", selected: params[:user_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :role_id, 'Filter role', options_from_collection_for_select(Role.all, "id", "name", selected: params[:role_id]), class: "form-control" %>
+    <%= select_with_caption :role_id, 'Filter role', options_from_collection_for_select(Role.all, "id", "name", selected: params[:role_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
 
     <%= f.submit "search", class: "btn btn-primary", style: "margin-left:5px;" %>
     <%= link_to "reset filters", membership_list_path, class: "icon icon-reload" %>
