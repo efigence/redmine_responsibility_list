@@ -1,11 +1,6 @@
-<div class="tabs">
-  <ul>
-    <li><a href="/responsibility_list" class="selected" id="tab-list">Responsibility list</a></li>
-    <li><a href="/memberships" id="tab-memberships">Memberships</a></li>
-  </ul>
-</div>
+<%= render :partial => 'resp_navbar' %>
 
-<h1><%= t(:responsibility_list) %></h1>
+<h1 style="padding-bottom:15px;"><%= t(:responsibility_list) %></h1>
 <h2><%= t(:open_projects) %></h2>
 <table class="list">
   <%= render 'table_header' %>

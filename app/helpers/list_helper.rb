@@ -10,4 +10,17 @@ module ListHelper
     end
     str.html_safe
   end
+
+  def render_membership_icon(membership)
+    if membership.given
+      "<img src='plugin_assets/redmine_responsibility_list/images/resp-plus.png'>".html_safe
+    else
+     "<img src='plugin_assets/redmine_responsibility_list/images/resp-minus.png'>".html_safe
+    end
+  end
+
+  def select_with_caption(name, caption, option_tags = nil, opts = {})
+    select_opts = "<option value=''>#{caption}</option>".html_safe + option_tags
+    select_tag(name, select_opts, opts)
+  end
 end

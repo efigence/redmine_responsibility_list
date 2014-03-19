@@ -1,15 +1,25 @@
-<div class="tabs">
-  <ul>
-    <li><a href="/responsibility_list" id="tab-list">Responsibility list</a></li>
-    <li><a href="/memberships"  class="selected" id="tab-memberships">Memberships</a></li>
-  </ul>
-</div>
+<%= render :partial => 'resp_navbar' %>
 
-<h1>memberships</h1>
+<h1 style="padding-bottom:15px;">Memberships</h1>
+
+<%= search_form_for @search, url: membership_list_path, class: "form-inline", id: "search-form" do |f| %>
+  <fieldset>
+    <legend>Filters</legend>
+    <%= select_with_caption :project_id, 'Filter project', options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control" %>
+
+    <%= select_with_caption :user_id, 'Filter user', options_from_collection_for_select(User.all, "id", "fullname_with_login", selected: params[:user_id]), class: "form-control" %>
+
+    <%= select_with_caption :role_id, 'Filter role', options_from_collection_for_select(Role.all, "id", "name", selected: params[:role_id]), class: "form-control" %>
+
+    <%= f.submit "search", class: "btn btn-primary", style: "margin-left:5px;" %>
+    <%= link_to "reset filters", membership_list_path, class: "icon icon-reload" %>
+  </fieldset>
+<% end %>
+
 <table class="list">
   <thead>
     <tr>
-      <th><%= t(:project) %></th>
+      <th>project</th>
       <th>user</th>
       <th>role</th>
       <th>given / taken away</th>
@@ -22,9 +32,15 @@
           <td style="width:10%"><%= link_to membership.project, project_path(membership.project) %></td>
           <td style="width:10%"><%= multiple_user_link(membership.user.login) %></td>
           <td style="width:10%"><%= Role.find(membership.role_id).name %></td>
-          <td style="width:10%"><%= membership.given ? "<img src='images/toggle_check.png'>".html_safe : "<img src='images/unlock.png'>".html_safe %></td>
+          <td style="width:10%"><%= render_membership_icon(membership) %></td>
           <td style="width:10%"><%= membership.created_at.to_s(:db) %></td>
         </tr>
       <% end %>
   </tbody>
 </table>
+<p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'custom_styles.css', :plugin => 'redmine_responsibility_list' %>
+<% end %>
