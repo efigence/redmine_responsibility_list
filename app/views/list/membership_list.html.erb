@@ -2,7 +2,7 @@
 
 <h1 style="padding-bottom:15px;">Memberships</h1>
 
-<%= search_form_for @search, url: membership_list_path, class: "form-inline", id: "search-form" do |f| %>
+<%= search_form_for @search, url: membership_list_path, id: "search-form" do |f| %>
   <fieldset>
     <legend>Filters</legend>
     <%= select_with_caption :project_id, 'Filter project', options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control" %>
@@ -16,7 +16,7 @@
   </fieldset>
 <% end %>
 
-<table class="list">
+<table class="list" style="margin-top:10px;">
   <thead>
     <tr>
       <th>project</th>
@@ -39,8 +39,3 @@
   </tbody>
 </table>
 <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
-
-
-<% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'custom_styles.css', :plugin => 'redmine_responsibility_list' %>
-<% end %>
