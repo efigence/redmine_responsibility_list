@@ -9,7 +9,6 @@ class ListController < ApplicationController
   def index
     @list_handler = ListHandler.new
     @full_list = @list_handler.generate
-
     respond_to do |format|
       format.html
       format.json { render :json => @full_list.to_json }
@@ -20,9 +19,9 @@ class ListController < ApplicationController
     @search = MembershipHistory.search(params[:q])
     search_params = {}
     %w(project_id user_id role_id).each do |param|
-      search_params[param] = params[param] unless params[param].blank?
+      search_params[param] = params[param] unless params[param].blank? || params[param] == 'all'
     end
-    unless params[:given].blank?
+    unless params[:given].blank? || params[:given] == 'all'
       search_params[:given] = (params[:given] == '1') ? true : (params[:given] == '0' ? false : nil)
     end
     @memberships = @search.result.where(search_params)

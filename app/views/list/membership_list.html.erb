@@ -1,6 +1,6 @@
 <%= render :partial => 'resp_navbar' %>
 
-<h1 style="padding-bottom:5px;"><%= t('membership.memberships') %></h1>
+<h1><%= t('membership.memberships') %></h1>
 
 <div class="splitcontentleft" style="width:70%;">
   <table class="list" style="margin-top:10px;">
@@ -28,7 +28,7 @@
   <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
 </div>
 
-<div class="splitcontentright" style="width:30%;">
+<div class="splitcontentright" style="width:29%;">
 <%= search_form_for @search, url: membership_list_path, id: "search-form" do |f| %>
   <fieldset>
     <legend><%= t('filter.filters') %></legend>
@@ -39,8 +39,9 @@
     <%= select_with_caption :role_id, t('filter.role'), options_from_collection_for_select(Role.where("name != :name", :name => 'Anonymous'), "id", "name", selected: params[:role_id]), class: "form-control", id: 'filter-role', :onchange => "this.form.submit(); return false;" %>
 
     <%= select_with_caption :given, t('filter.type'), options_for_select([["Given", '1'], ["Taken away", '0']], selected: params[:given]), class: "form-control", id: 'filter-given', :onchange => "this.form.submit(); return false;" %>
-
-    <%= link_to t('filter.reset'), membership_list_path, class: "icon icon-reload" %>
+    <div class="contextual">
+      <%= link_to t('filter.reset'), membership_list_path, class: "icon icon-reload" %>
+    </div>
   </fieldset>
 <% end %>
 </div>

@@ -20,7 +20,12 @@ module ListHelper
   end
 
   def select_with_caption(name, caption, option_tags = nil, opts = {})
-    select_opts = "<option value=''>#{caption}</option>".html_safe + option_tags
+    select_opts = "<option value=''>#{caption}</option><option value='all'>All</option>".html_safe + option_tags
     select_tag(name, select_opts, opts)
+  end
+
+  def render_link_to_memberships(project_data)
+    id = Project.select(:id).where(name: project_data[:name]).first.id
+    link_to 'history', "/membership_list?project_id=#{id}", class: "icon icon-user", style: "line-height:1.4em;font-size:0.9em;"
   end
 end
