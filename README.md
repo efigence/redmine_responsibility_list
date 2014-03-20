@@ -1,17 +1,20 @@
 # Redmine Responsibility List plugin
 
-Plugin which enables access to responsibility list of all projects in redmine in HTML & in JSON.
+Plugin which enables access to responsibility list of redmine projects in HTML & JSON formats.
+
+It also creates a listing of project membership history (saves information about roles which have been added to project members and which were taken away).
 
 # Requirements
 
-Developed & tested on Redmine 2.3.3.
+Developed and tested on Redmine 2.3.3 & 2.4.3.
 
 # Installation
 
 1. Go to your Redmine installation's plugins/ directory.
 2. `git clone http://github.com/efigence/redmine_responsibility_list`
 3. Go back to root directory.
-4. Restart Redmine.
+4. `rake redmine:plugins:migrate RAILS_ENV=production`
+5. Restart Redmine.
 
 # Configuration
 
@@ -45,6 +48,8 @@ Responsibility list provides separate lists for open, closed & archived projects
 To get responsibility list as JSON, request its URL with HTTP Header 'Authorization' set to the key defined in settings, for example:
 
 `curl --header "Authorization: RJwKdAN9" http://your.host.with.port/responsibility_list.json`
+
+To get the membership history page simply click on the `membership list` tab after visitng the `responsibility list` page.
 
 # License
 Redmine Responsibility List plugin is an Open Source project covered by the GNU General Public
