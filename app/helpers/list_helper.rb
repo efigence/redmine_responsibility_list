@@ -13,9 +13,9 @@ module ListHelper
 
   def render_membership_icon(membership)
     if membership.given
-      "<img src='plugin_assets/redmine_responsibility_list/images/resp-plus.png'>".html_safe
+      "<img src='/images/toggle_check.png' title='role given' alt='role given'>".html_safe
     else
-     "<img src='plugin_assets/redmine_responsibility_list/images/resp-minus.png'>".html_safe
+      "<img src='/images/locked.png' title='role taken away' alt='role taken away'>".html_safe
     end
   end
 
