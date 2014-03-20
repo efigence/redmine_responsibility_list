@@ -29,21 +29,21 @@
 </div>
 
 <div class="splitcontentright" style="width:29%;">
-<%= search_form_for @search, url: membership_list_path, id: "search-form" do |f| %>
-  <fieldset>
-    <legend><%= t('filter.filters') %></legend>
-    <%= select_with_caption :project_id, t('filter.project'), options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control", id: 'filter-project',:onchange => "this.form.submit(); return false;" %>
+  <%= form_tag membership_list_path, method: :get do %>
+    <fieldset>
+      <legend><%= t('filter.filters') %></legend>
+      <%= select_with_caption :project_id, t('filter.project'), options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control", id: 'filter-project',:onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :user_id, t('filter.user'), options_from_collection_for_select(User.where("lastname != :name", :name => 'Anonymous'), "id", "fullname_with_login", selected: params[:user_id]), class: "form-control", id: 'filter-user', :onchange => "this.form.submit(); return false;" %>
+      <%= select_with_caption :user_id, t('filter.user'), options_from_collection_for_select(User.where("lastname != :name", :name => 'Anonymous'), "id", "fullname_with_login", selected: params[:user_id]), class: "form-control", id: 'filter-user', :onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :role_id, t('filter.role'), options_from_collection_for_select(Role.where("name != :name", :name => 'Anonymous'), "id", "name", selected: params[:role_id]), class: "form-control", id: 'filter-role', :onchange => "this.form.submit(); return false;" %>
+      <%= select_with_caption :role_id, t('filter.role'), options_from_collection_for_select(Role.where("name != :name", :name => 'Anonymous'), "id", "name", selected: params[:role_id]), class: "form-control", id: 'filter-role', :onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :given, t('filter.type'), options_for_select([["Given", '1'], ["Taken away", '0']], selected: params[:given]), class: "form-control", id: 'filter-given', :onchange => "this.form.submit(); return false;" %>
-    <div class="contextual">
-      <%= link_to t('filter.reset'), membership_list_path, class: "icon icon-reload" %>
-    </div>
-  </fieldset>
-<% end %>
+      <%= select_with_caption :given, t('filter.type'), options_for_select([["Given", '1'], ["Taken away", '0']], selected: params[:given]), class: "form-control", id: 'filter-given', :onchange => "this.form.submit(); return false;" %>
+      <div class="contextual">
+        <%= link_to t('filter.reset'), membership_list_path, class: "icon icon-reload" %>
+      </div>
+    </fieldset>
+  <% end %>
 </div>
 <%= javascript_tag do %>
   $('#filter-project').selectize();

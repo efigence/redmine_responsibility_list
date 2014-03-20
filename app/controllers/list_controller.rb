@@ -16,7 +16,6 @@ class ListController < ApplicationController
   end
 
   def membership_list
-    @search = MembershipHistory.search(params[:q])
     search_params = {}
     %w(project_id user_id role_id).each do |param|
       search_params[param] = params[param] unless params[param].blank? || params[param] == 'all'
@@ -24,7 +23,7 @@ class ListController < ApplicationController
     unless params[:given].blank? || params[:given] == 'all'
       search_params[:given] = (params[:given] == '1') ? true : (params[:given] == '0' ? false : nil)
     end
-    @memberships = @search.result.where(search_params)
+    @memberships = MembershipHistory.where(search_params)
 
     @paginate, @memberships = paginate @memberships.order('created_at DESC'), :per_page => 20
   end
