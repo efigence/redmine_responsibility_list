@@ -28,4 +28,9 @@ $(function(){
   $('#custom_fields').selectize({
     plugins: ['remove_button']
   });
+
+  $('#auth_key').on('input', function() {
+      var value = $("#auth_key").val();
+      $("#auth_val_hidden").text(value);
+  });
 });

@@ -43,15 +43,22 @@
   </div>
   <div class="form-elem">
     <h4><%= t(:auth_header) %></h4>
-    <div class="formrow">
-      <%= text_field_tag "settings[[auth_key]]", Setting.plugin_redmine_responsibility_list[:auth_key], class: "basictxt", id: "auth_key", :autocomplete => 'off' %>
+    <div style="height:25px;">
+      <div class="splitcontentleft" style="width:20%;">
+        <%= text_field_tag "settings[[auth_key]]", Setting.plugin_redmine_responsibility_list[:auth_key], class: "basictxt", id: "auth_key", :autocomplete => 'off' %>
+      </div>
+      <div class="splitcontentright" style="width:80%;">
+        <div class="auth-example">
+          <p><u><i>Usage with curl:</i></u><br />curl --header "Authorization: </p><p id="auth_val_hidden"><%= Setting.plugin_redmine_responsibility_list[:auth_key] %></p><p><%= "\" #{responsibility_list_url}.json" %></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'settings_page.js',   :plugin => 'redmine_responsibility_list' %>
   <%= javascript_include_tag 'selectize.min.js',   :plugin => 'redmine_responsibility_list' %>
+  <%= javascript_include_tag 'settings_page.js',   :plugin => 'redmine_responsibility_list' %>
   <%= stylesheet_link_tag 'selectize.default.css', :plugin => 'redmine_responsibility_list' %>
   <%= stylesheet_link_tag 'custom_styles.css',     :plugin => 'redmine_responsibility_list' %>
 <% end %>

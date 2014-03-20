@@ -24,7 +24,7 @@ Redmine::Plugin.register :redmine_responsibility_list do
   name 'Redmine Responsibility List plugin'
   author 'Jacek Grzybowski'
   description 'Plugin allowing to create responsibility list for existing projects'
-  version '0.0.1'
+  version '1.0.0'
 
   menu :top_menu, :responsibility_list,
     { :controller => 'list', :action => 'index' },

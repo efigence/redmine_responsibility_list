@@ -8,11 +8,15 @@
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.formrow {
-  width:450px;
-  padding-bottom: 4px;
-}
-
 .form-elem {
   padding:8px 0px;
+}
+
+.auth-example {
+  margin-left: 20px;
+}
+
+.auth-example p {
+  display: inline;
+  font-family: Courier, Monaco, monospace;
 }
