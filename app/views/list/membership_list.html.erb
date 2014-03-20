@@ -1,42 +1,56 @@
 <%= render :partial => 'resp_navbar' %>
 
-<h1 style="padding-bottom:15px;"><%= t('membership.memberships') %></h1>
+<h1 style="padding-bottom:5px;"><%= t('membership.memberships') %></h1>
 
+<div class="splitcontentleft" style="width:70%;">
+  <table class="list" style="margin-top:10px;">
+    <thead>
+      <tr>
+        <th><%= t('project') %></th>
+        <th><%= t('user') %></th>
+        <th><%= t('role') %></th>
+        <th><%= t('membership.type') %></th>
+        <th><%= t('membership.date') %></th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @memberships.each do |membership| %>
+          <tr style="height:25px;">
+            <td style="width:27%"><%= link_to membership.project, project_path(membership.project) %></td>
+            <td style="width:23%"><%= multiple_user_link(membership.user.login) %></td>
+            <td style="width:20%"><%= Role.find(membership.role_id).name %></td>
+            <td style="width:7%"><%= render_membership_icon(membership) %></td>
+            <td style="width:23%"><%= membership.created_at.to_s(:db) %></td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+  <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+</div>
+
+<div class="splitcontentright" style="width:30%;">
 <%= search_form_for @search, url: membership_list_path, id: "search-form" do |f| %>
   <fieldset>
     <legend><%= t('filter.filters') %></legend>
-    <%= select_with_caption :project_id, t('filter.project'), options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
+    <%= select_with_caption :project_id, t('filter.project'), options_from_collection_for_select(Project.all, "id", "name", selected: params[:project_id]), class: "form-control", id: 'filter-project',:onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :user_id, t('filter.user'), options_from_collection_for_select(User.all, "id", "fullname_with_login", selected: params[:user_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
+    <%= select_with_caption :user_id, t('filter.user'), options_from_collection_for_select(User.where("lastname != :name", :name => 'Anonymous'), "id", "fullname_with_login", selected: params[:user_id]), class: "form-control", id: 'filter-user', :onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :role_id, t('filter.role'), options_from_collection_for_select(Role.all, "id", "name", selected: params[:role_id]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
+    <%= select_with_caption :role_id, t('filter.role'), options_from_collection_for_select(Role.where("name != :name", :name => 'Anonymous'), "id", "name", selected: params[:role_id]), class: "form-control", id: 'filter-role', :onchange => "this.form.submit(); return false;" %>
 
-    <%= select_with_caption :given, t('filter.type'), options_for_select([["Given", '1'], ["Taken away", '0']], selected: params[:given]), class: "form-control", :onchange => "this.form.submit(); return false;" %>
+    <%= select_with_caption :given, t('filter.type'), options_for_select([["Given", '1'], ["Taken away", '0']], selected: params[:given]), class: "form-control", id: 'filter-given', :onchange => "this.form.submit(); return false;" %>
 
     <%= link_to t('filter.reset'), membership_list_path, class: "icon icon-reload" %>
   </fieldset>
 <% end %>
-
-<table class="list" style="margin-top:10px;">
-  <thead>
-    <tr>
-      <th><%= t('project') %></th>
-      <th><%= t('user') %></th>
-      <th><%= t('role') %></th>
-      <th><%= t('membership.type') %></th>
-      <th><%= t('membership.date') %></th>
-    </tr>
-  </thead>
-  <tbody>
-      <% @memberships.each do |membership| %>
-        <tr style="height:25px;">
-          <td style="width:10%"><%= link_to membership.project, project_path(membership.project) %></td>
-          <td style="width:10%"><%= multiple_user_link(membership.user.login) %></td>
-          <td style="width:10%"><%= Role.find(membership.role_id).name %></td>
-          <td style="width:10%"><%= render_membership_icon(membership) %></td>
-          <td style="width:10%"><%= membership.created_at.to_s(:db) %></td>
-        </tr>
-      <% end %>
-  </tbody>
-</table>
-<p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+</div>
+<%= javascript_tag do %>
+  $('#filter-project').selectize();
+  $('#filter-user').selectize();
+  $('#filter-role').selectize();
+  $('#filter-given').selectize();
+<% end %>
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'selectize.min.js',   :plugin => 'redmine_responsibility_list' %>
+  <%= stylesheet_link_tag 'selectize.default.css', :plugin => 'redmine_responsibility_list' %>
+<% end %>
