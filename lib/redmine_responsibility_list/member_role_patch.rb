@@ -13,14 +13,18 @@ module RedmineResponsibilityList
 
     module InstanceMethods
       def record_added_membership
-        member.user.membership_histories.create(role_id: role_id,
-                                                project_id: member.project_id,
-                                                given: true)
+        if member.user
+          member.user.membership_histories.create(role_id: role_id,
+                                                  project_id: member.project_id,
+                                                  given: true)
+        end
       end
       def record_deleted_membership
-        member.user.membership_histories.create(role_id: role_id,
-                                                project_id: member.project_id,
-                                                given: false)
+        if member.user
+          member.user.membership_histories.create(role_id: role_id,
+                                                  project_id: member.project_id,
+                                                  given: false)
+        end
       end
       private :record_added_membership, :record_deleted_membership
     end
