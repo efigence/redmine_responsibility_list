@@ -2,13 +2,8 @@ module ListHelper
 
   def multiple_user_link(user_logins)
     return nil if user_logins.empty?
-    str = ''
     users = User.select([:id, :login, :firstname, :lastname]).where(login: user_logins)
-    users.each do |user|
-      str << link_to("#{user.to_s} (#{user.login})", user_path(user))
-      str << ', ' unless users.last == user
-    end
-    str.html_safe
+    users.map{|user| link_to("#{user.to_s} (#{user.login})", user_path(user))}.join(', ').html_safe
   end
 
   def render_membership_icon(membership)
@@ -26,6 +21,6 @@ module ListHelper
 
   def render_link_to_memberships(project_data)
     id = Project.select(:id).where(name: project_data[:name]).first.id
-    link_to 'history', "/membership_list?project_id=#{id}", class: "icon icon-user", style: "line-height:1.4em;font-size:0.9em;"
+    link_to 'history', membership_list_path(project_id: id), class: "icon icon-user", style: "line-height:1.4em;font-size:0.9em;"
   end
 end
